@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  mysql_db:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: insightt_db
+      MYSQL_USER: insightt_user
+      MYSQL_PASSWORD: insightt_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  task-crud-insightt-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-crud-insightt-backend
+    volumes:
+      - ./task-crud-insightt:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      mysql_db:
+        condition: service_healthy
+    networks:
+      - default
+
+  task-crud-insightt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-crud-insightt
+    ports:
+      - "5174:5174"
+    volumes:
+      - ./task-crud-insightt:/app
+    depends_on:
+      task-crud-insightt-backend:
+        condition: service_started
+    networks:
+      - default
+
+
+networks:
+  default:
+    driver: bridge
+volumes:
+  db_data:
+    driver: local
