@@ -1,12 +1,19 @@
-FROM node:18-alpine AS builder
+FROM node:20.11.1-bookworm-slim
 
-ENV NODE_ENV=production
 WORKDIR /app
 
+RUN apt-get update && \
+    apt-get install -y \
+    ca-certificates \
+    curl \
+    gnupg \
+    build-essential \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
 COPY package*.json ./
-COPY vite.config.ts .
-RUN npm ci --silent
+RUN npm install --include=dev
 
 COPY . .
 
-RUN npm run dev
+CMD ["npm", "run", "dev"]

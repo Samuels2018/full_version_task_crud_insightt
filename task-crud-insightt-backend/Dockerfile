@@ -1,8 +1,18 @@
-FROM node:23
+FROM node:20.11.1-bookworm-slim
+
 WORKDIR /app
-COPY package.json ./
-COPY package-lock.json ./
+
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    python3 \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY package*.json ./
 RUN npm install
+
+RUN npm install -g sequelize-cli
+
 COPY . .
-RUN npx sequelize-cli db:migrate
-CMD ["npx", "ts-node", "server.ts"]
+
+CMD ["sh", "-c", "sequelize-cli db:migrate && node server.js"]

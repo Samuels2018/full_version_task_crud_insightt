@@ -9,7 +9,7 @@ services:
       MYSQL_USER: insightt_user
       MYSQL_PASSWORD: insightt_pass
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:
@@ -20,7 +20,7 @@ services:
 
   task-crud-insightt-backend:
     build:
-      context: .
+      context: ./task-crud-insightt-backend
       dockerfile: Dockerfile
     container_name: task-crud-insightt-backend
     volumes:
@@ -35,11 +35,11 @@ services:
 
   task-crud-insightt:
     build:
-      context: .
+      context: ./task-crud-insightt
       dockerfile: Dockerfile
     container_name: task-crud-insightt
     ports:
-      - "5174:5174"
+      - "5173:5173"
     volumes:
       - ./task-crud-insightt:/app
     depends_on:
