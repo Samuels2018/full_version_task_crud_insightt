@@ -1,18 +1,18 @@
-FROM node:20.11.1-bookworm-slim
+FROM node:20-alpine
 
-WORKDIR /app
+ENV NODE_ENV=development
+ENV PORT=3000
 
-RUN apt-get update && \
-    apt-get install -y \
-    build-essential \
-    python3 \
-    && rm -rf /var/lib/apt/lists/*
+WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm install
-
-RUN npm install -g sequelize-cli
+RUN npm install --include=dev
+RUN npm install -g ts-node typescript
 
 COPY . .
 
-CMD ["sh", "-c", "sequelize-cli db:migrate && node server.js"]
+RUN chmod +x entrypoint.sh
+
+EXPOSE ${PORT}
+
+CMD ["./entrypoint.sh"]

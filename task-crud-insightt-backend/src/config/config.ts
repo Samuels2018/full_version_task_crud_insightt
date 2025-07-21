@@ -9,8 +9,7 @@ export default {
     database: process.env.DB_NAME || 'task_crud_insightt',
     host: process.env.DB_HOST || 'localhost',
     port: parseInt(process.env.DB_PORT || '3306', 10),
-    dialect: 'mysql', // ¡Asegúrate de incluir esto explícitamente!
-    // Opcional: para evitar warnings de consola
+    dialect: 'mysql',
     define: {
       timestamps: true,
       underscored: true,

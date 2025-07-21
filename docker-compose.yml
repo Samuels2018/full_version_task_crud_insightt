@@ -1,5 +1,6 @@
 version: "3.9"
 services:
+
   mysql_db:
     image: mysql:8.0
     container_name: mysql_db
@@ -23,6 +24,8 @@ services:
       context: ./task-crud-insightt-backend
       dockerfile: Dockerfile
     container_name: task-crud-insightt-backend
+    environment:
+      NODE_ENV: production
     volumes:
       - ./task-crud-insightt:/app
     ports:
@@ -30,6 +33,11 @@ services:
     depends_on:
       mysql_db:
         condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/api/task"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
     networks:
       - default
 
@@ -42,11 +50,12 @@ services:
       - "5173:5173"
     volumes:
       - ./task-crud-insightt:/app
-    depends_on:
-      task-crud-insightt-backend:
-        condition: service_started
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+
     networks:
       - default
+
 
 
 networks:

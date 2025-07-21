@@ -14,9 +14,9 @@ const sequelize = new Sequelize({
     if (timing) console.log(`[Execution time] ${timing}ms`);
   },
   define: {
-    underscored: false, // Desactiva snake_case
-    freezeTableName: true, // Evita pluralización
-    timestamps: true // Asegúrate que esté activado
+    underscored: false,
+    freezeTableName: true,
+    timestamps: true
   }
 });
 
