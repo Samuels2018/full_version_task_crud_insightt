@@ -10,7 +10,7 @@ services:
       MYSQL_USER: insightt_user
       MYSQL_PASSWORD: insightt_pass
     ports:
-      - "3307:3306"
+      - "3306:3306"
     volumes:
       - db_data:/var/lib/mysql
     healthcheck:

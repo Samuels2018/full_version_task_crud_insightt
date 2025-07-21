@@ -66,7 +66,7 @@ Backend	DB_HOST	mysql_db	Host base de datos
 	DB_USER	insightt_user	Usuario DB
 	DB_PASSWORD	insightt_pass	Contraseña DB
 	DB_NAME	insightt_db	Nombre DB
-Frontend	VITE_API_BASE_URL	http://localhost:3000	URL API backend
+Frontend	VITE_API_BASE_URL	http://localhost:3000/api/task	URL API backend
 Flujo de Inicio y Dependencias
 
 Secuencia de arranque controlada por Docker Compose:
@@ -93,7 +93,7 @@ Secuencia de arranque controlada por Docker Compose:
 
         Configura llamadas API a backend:3000
 
-        Inicia servidor Vite en puerto 5174
+        Inicia servidor Vite en puerto 5173
 
 Verificación de estado:
 
@@ -108,9 +108,9 @@ Características del Entorno de Desarrollo
 
 🌐 Acceso Directo
 
-    Frontend: http://localhost:5174
+    Frontend: http://http://localhost:5173
 
-    Backend: http://localhost:3000
+    Backend: http://localhost:3000/api/task
 
     MySQL: localhost:3306 (usuario: root, contraseña: root)
 
@@ -157,7 +157,7 @@ Desarrollo frontend:
 
     Editar archivos en task-crud-insightt/
 
-    Cambios reflejados automáticamente en http://localhost:5174
+    Cambios reflejados automáticamente en http://http://localhost:5173
 
 Desarrollo backend:
 
